@@ -10,12 +10,8 @@ import {
 import Slider from '@react-native-community/slider';
 
 class LifeCategory extends Component {
-    state = {
-        score: 1
-    }
 
     sliderChange = (score) => {
-        console.dir(score)
         this.props.onSlider(this.props.category, score)
     }
 

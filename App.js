@@ -6,38 +6,78 @@
  * @flow
  */
 
-import React from 'react';
+
+import React, {Component} from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar
+  ScrollView
 } from 'react-native';
 
 import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
+  Colors
 } from 'react-native/Libraries/NewAppScreen';
 
 import NewLifeWheel from './components/NewLifeWheel'
+import HabitTracker from './components/HabitTracker'
+import HabitWeekly from './components/HabitWeekly'
+import LifeWheels from './components/LifeWheels'
 
-lifeWheelDone = (newWheel) => {
-  console.log(newWheel)
-}
+const HOME = 'home';
+const HABIT_WEEKLY = 'habit_weekly';
+const HABIT_TRACKER = 'habit_tracker';
+const NEW_LIFE_WHEEL = 'new_life_wheel';
+const LIFE_WHEELS = 'life_wheels';
+
+export default class App extends Component {
+
+  state = {
+    currentView: HABIT_TRACKER
+  }
+
+  weeklyDone = () => {
+    this.setState({
+      currentView: NEW_LIFE_WHEEL
+    })
+  }
+
+  trackerDone = () => {
+    this.setState({
+      currentView: HABIT_WEEKLY
+    })
+  }
+
+  newLifeWheelDone = () => {
+    this.setState({
+      currentView: LIFE_WHEELS
+    })
+  }
+
+  lifeWheelsDone = () => {
+    this.setState({
+      currentView: HABIT_TRACKER
+    })
+  }
 
 
-const App: () => React$Node = () => {
-  return (
-    
-      <NewLifeWheel done={this.lifeWheelDone}/>
+  render() {
+    return (
+      <ScrollView contentInsetAdjustmentBehavior="automatic"
+                                style={styles.scrollView}>
+          {this.state.currentView === HABIT_WEEKLY && 
+          <HabitWeekly done={this.weeklyDone}/>}
 
-      
-  );
+          {this.state.currentView === HABIT_TRACKER && 
+          <HabitTracker done={this.trackerDone}/>}
+
+          {this.state.currentView === NEW_LIFE_WHEEL && 
+          <NewLifeWheel done={this.newLifeWheelDone}/>}
+
+          {this.state.currentView === LIFE_WHEELS && 
+          <LifeWheels done={this.lifeWheelsDone}/>}
+
+        </ScrollView> 
+    );
+  }
 };
 
 const styles = StyleSheet.create({
@@ -78,5 +118,3 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
 });
-
-export default App;

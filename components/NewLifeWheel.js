@@ -14,20 +14,19 @@ import {fetchCategories, postLifeWheel} from './requests'
 
 class NewLifeWheel extends Component {
     state = {
-        categories: [{name: 'Category 1', score: 7}, {name: 'Category 2', score: 8}]
+        categories: []
     }
 
     scoreChange = (name, score) => {
-        console.log(name, ": ", score)
         this.state.categories.find(category => category.name === name).score = score
         const newCategories = this.state.categories
         this.setState({
             categories: newCategories
-          });
+        });
     }
 
     componentDidMount() {
-        //TBD change to logged in user ID after auth is implemented
+        //TODO change to logged in user ID after auth is implemented
         fetchCategories(1).then(data => {
             const categories = []
             data.forEach(category => categories.push({name: category.name, score: 5}))
@@ -36,9 +35,9 @@ class NewLifeWheel extends Component {
     }
 
     submit = () => {
-        //TBD change to logged in user ID after auth is implemented
+        //TODO change to logged in user ID after auth is implemented
         postLifeWheel(1, this.state.categories)
-        .then(wheel => console.log(wheel))
+        .then(wheel => this.props.done(wheel))
     }
 
     render() {
